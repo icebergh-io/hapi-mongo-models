@@ -1,17 +1,11 @@
 # hapi-mongo-models
 
-A hapi plugin for [`mongo-models`](https://github.com/jedireza/mongo-models).
-
-[![Build Status](https://travis-ci.org/jedireza/hapi-mongo-models.svg?branch=master)](https://travis-ci.org/jedireza/hapi-mongo-models)
-[![Dependency Status](https://david-dm.org/jedireza/hapi-mongo-models.svg?style=flat)](https://david-dm.org/jedireza/hapi-mongo-models)
-[![devDependency Status](https://david-dm.org/jedireza/hapi-mongo-models/dev-status.svg?style=flat)](https://david-dm.org/jedireza/hapi-mongo-models#info=devDependencies)
-[![peerDependency Status](https://david-dm.org/jedireza/hapi-mongo-models/peer-status.svg?style=flat)](https://david-dm.org/jedireza/hapi-mongo-models#info=peerDependencies)
-
+A hapi plugin for [`icebergh-mongo-models`](https://github.com/icebergh-io/mongo-models).
 
 ## Install
 
 ```bash
-$ npm install hapi-mongo-models
+$ npm install icebergh-hapi-mongo-models
 ```
 
 
@@ -25,7 +19,7 @@ option, we create any indexes defined in the `models` supplied.
 #### Register
 
 ```js
-const HapiMongoModels = require('hapi-mongo-models');
+const HapiMongoModels = require('icebergh-hapi-mongo-models');
 
 const plugin = {
     plugin: HapiMongoModels,
