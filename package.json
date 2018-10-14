@@ -1,10 +1,10 @@
 {
   "name": "icebergh-hapi-mongo-models",
-  "version": "7.1.0",
+  "version": "7.1.2",
   "description": "A hapi plugin for mongo-models",
   "main": "index.js",
   "scripts": {
-    "test": "lab -c -L"
+    "test": "lab -c"
   },
   "repository": {
     "type": "git",

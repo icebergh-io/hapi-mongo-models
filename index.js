@@ -32,11 +32,12 @@ const register = async function (server, options) {
         .map((path) => modelModules[path])
         .filter((model) => Boolean(model.indexes))
         .map((model) => {
-          console.log(`Creating indexes for ${model.collectionName}, ${model.indexes}`);
-          model.createIndexes.bind(model, model.indexes);
+          console.log(`Creating indexes for ${model.collectionName}, ${JSON.stringify(model.indexes)}`);
+          model.createIndexes(model.indexes);
         });
 
-      await Promise.all(indexJobs);
+      await Promise.all(indexJobs)
+        .catch(err => server.log(['error', 'mongodb'], `Error when creating indexes: ${err}`));
 
       server.log(['info', 'mongodb'], 'HapiMongoModels: finished processing auto indexes.');
     }
