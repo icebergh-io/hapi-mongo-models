@@ -1,20 +1,21 @@
 'use strict';
 const Joi = require('joi');
-const MongoModels = require('mongo-models');
+const MongoModels = require('icebergh-mongo-models');
 
 
-class Dummy extends MongoModels {}
+class Dummy extends MongoModels {
+}
 
 Dummy.collectionName = 'dummies';
 
 Dummy.schema = Joi.object().keys({
-    name: Joi.string().required(),
-    hasHat: Joi.boolean()
+  name: Joi.string().required(),
+  hasHat: Joi.boolean()
 });
 
 Dummy.indexes = [
-    { key: { name: 1 } },
-    { key: { hasHat: -1 } }
+  { key: { name: 1 } },
+  { key: { hasHat: -1 } }
 ];
 
 

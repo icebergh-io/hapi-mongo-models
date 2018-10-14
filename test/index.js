@@ -8,114 +8,114 @@ const Proxyquire = require('proxyquire');
 
 const lab = exports.lab = Lab.script();
 const config = {
-    mongodb: {
-        connection: {
-            uri: 'mongodb://localhost:27017/',
-            db: 'hapi-mongo-models-test'
-        },
-        options: {}
+  mongodb: {
+    connection: {
+      uri: 'mongodb://admin:adminpass@localhost:27017/',
+      db: 'hapi-mongo-models-test'
     },
-    models: [
-        Path.resolve(__dirname, 'fixtures/dummy-model'),
-        Path.resolve(__dirname, 'fixtures/noindex-model')
-    ]
+    options: {}
+  },
+  models: [
+    Path.resolve(__dirname, 'fixtures/dummy-model'),
+    Path.resolve(__dirname, 'fixtures/noindex-model')
+  ]
 };
 const stub = {
-    MongoModels: {}
+  MongoModels: {}
 };
 const HapiMongoModels = Proxyquire('..', {
-    'mongo-models': stub.MongoModels
+  'icebergh-mongo-models': stub.MongoModels
 });
 
 
 lab.experiment('Plugin', () => {
 
-    lab.test('it throws an error when the db connection fails', async () => {
+  lab.test('it throws an error when the db connection fails', async () => {
 
-        const realConnect = stub.MongoModels.connect;
+    const realConnect = stub.MongoModels.connect;
 
-        stub.MongoModels.connect = function (connection, options) {
+    stub.MongoModels.connect = function (connection, options) {
 
-            throw Error('connect failed');
-        };
+      throw Error('connect failed');
+    };
 
-        const server = Hapi.Server();
-        const plugin = {
-            plugin: HapiMongoModels,
-            options: config
-        };
-        const throws = async function () {
+    const server = Hapi.Server();
+    const plugin = {
+      plugin: HapiMongoModels,
+      options: config
+    };
+    const throws = async function () {
 
-            await server.register(plugin);
-        };
+      await server.register(plugin);
+    };
 
-        await Code.expect(throws()).to.reject();
+    await Code.expect(throws()).to.reject();
 
-        stub.MongoModels.connect = realConnect;
-    });
-
-
-    lab.test('it successfuly connects and exposes the plugin (default autoIndex value)', async () => {
-
-        const server = Hapi.Server();
-        const plugin = {
-            plugin: HapiMongoModels,
-            options: config
-        };
-
-        await server.register(plugin);
-        await server.start();
-
-        Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
-
-        server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
-
-        await server.stop();
-    });
+    stub.MongoModels.connect = realConnect;
+  });
 
 
-    lab.test('it connects to the db and creates indexes during pre-start (autoIndex set manually)', async () => {
+  lab.test('it successfuly connects and exposes the plugin (default autoIndex value)', async () => {
 
-        const configClone = JSON.parse(JSON.stringify(config));
+    const server = Hapi.Server();
+    const plugin = {
+      plugin: HapiMongoModels,
+      options: config
+    };
 
-        configClone.autoIndex = true;
+    await server.register(plugin);
+    await server.start();
 
-        const server = Hapi.Server();
-        const plugin = {
-            plugin: HapiMongoModels,
-            options: configClone
-        };
+    Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
 
-        await server.register(plugin);
-        await server.start();
+    server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
 
-        Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
-
-        server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
-
-        await server.stop();
-    });
+    await server.stop();
+  });
 
 
-    lab.test('it connects to the db and skips creating indexes during pre-start (autoIndex set manually)', async () => {
+  lab.test('it connects to the db and creates indexes during pre-start (autoIndex set manually)', async () => {
 
-        const configClone = JSON.parse(JSON.stringify(config));
+    const configClone = JSON.parse(JSON.stringify(config));
 
-        configClone.autoIndex = false;
+    configClone.autoIndex = true;
 
-        const server = Hapi.Server();
-        const plugin = {
-            plugin: HapiMongoModels,
-            options: configClone
-        };
+    const server = Hapi.Server();
+    const plugin = {
+      plugin: HapiMongoModels,
+      options: configClone
+    };
 
-        await server.register(plugin);
-        await server.start();
+    await server.register(plugin);
+    await server.start();
 
-        Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
+    Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
 
-        server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
+    server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
 
-        await server.stop();
-    });
+    await server.stop();
+  });
+
+
+  lab.test('it connects to the db and skips creating indexes during pre-start (autoIndex set manually)', async () => {
+
+    const configClone = JSON.parse(JSON.stringify(config));
+
+    configClone.autoIndex = false;
+
+    const server = Hapi.Server();
+    const plugin = {
+      plugin: HapiMongoModels,
+      options: configClone
+    };
+
+    await server.register(plugin);
+    await server.start();
+
+    Code.expect(server.plugins['hapi-mongo-models']).to.be.an.object();
+
+    server.plugins['hapi-mongo-models']['mongo-models'].disconnect();
+
+    await server.stop();
+  });
 });
