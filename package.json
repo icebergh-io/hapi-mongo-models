@@ -1,5 +1,5 @@
 {
-  "name": "hapi-mongo-models",
+  "name": "icebergh-hapi-mongo-models",
   "version": "7.1.0",
   "description": "A hapi plugin for mongo-models",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jedireza/hapi-mongo-models.git"
+    "url": "git@github.com:icebergh-io/hapi-mongo-models.git"
   },
   "keywords": [
     "hapi",
@@ -22,26 +22,26 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "author": "Reza Akhavan <reza@akhavan.me>",
+  "author": "Icebergh <hello@icebergh.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jedireza/hapi-mongo-models/issues"
+    "url": "https://github.com/icbergh-io/hapi-mongo-models/issues"
   },
-  "homepage": "https://github.com/jedireza/hapi-mongo-models",
+  "homepage": "https://github.com/icebergh-io/hapi-mongo-models",
   "devDependencies": {
     "code": "5.x.x",
-    "hapi": "17.x.x",
-    "joi": "13.x.x",
+    "hapi": "^17.6.0",
+    "icebergh-mongo-models": "2.x.x",
+    "joi": "^13.7.0",
     "lab": "15.x.x",
-    "mongodb": "3.x.x",
-    "mongo-models": "2.x.x",
+    "mongodb": "^3.1.8",
     "proxyquire": "1.x.x"
   },
   "peerDependencies": {
-    "mongodb": "3.x.x",
-    "mongo-models": "2.x.x"
+    "mongodb": "^3.1.8",
+    "icebergh-mongo-models": "2.x.x"
   },
   "dependencies": {
-    "hoek": "5.x.x"
+    "hoek": "^5.0.4"
   }
 }
